@@ -6,6 +6,7 @@
     <title>Login</title>
 </head>
 <body>
+    
     <h1>WELCOME TO TRACK YOUR MOENY 💸</h1>
     <form method="POST"> 
         Name: <input type="text" name="name" required>
