@@ -23,6 +23,7 @@
             $row = mysqli_fetch_assoc($result);
             if(Password_verify($input_pass,$row['password'])){
                 echo "Login Successful";
+                echo "<script>window.location='dashboard.php'</script>";
             }else{
                 echo "Wrong Password";
             }

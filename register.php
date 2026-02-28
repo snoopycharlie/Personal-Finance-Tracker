@@ -6,7 +6,7 @@
     <title>Login</title>
 </head>
 <body>
-    
+      <button onclick="window.location.href='login.php'">Login</button> 
     <h1>WELCOME TO TRACK YOUR MOENY 💸</h1>
     <form method="POST"> 
         Name: <input type="text" name="name" required>
@@ -33,8 +33,9 @@
        $query="INSERT INTO userdata(`Name`, `Email`, `password` )VALUES ('$name','$mail','$pass')";
        $execute=mysqli_query($con,$query);
        if($execute){
-        echo "Inserted Successfully";
-       }else{
+        echo "Registered Successfully";
+        echo "<script>window.location='dashboard.php'</script>";
+    }else{
         echo "Error:".mysqli_error($con);
        }
     }
