@@ -34,7 +34,7 @@
        $execute=mysqli_query($con,$query);
        if($execute){
         echo "Registered Successfully";
-        echo "<script>window.location='dashboard.php'</script>";
+        echo "<script>window.location='login.php'</script>";
     }else{
         echo "Error:".mysqli_error($con);
        }

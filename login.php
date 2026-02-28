@@ -1,3 +1,6 @@
+<?php
+     session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +15,8 @@
         Password:<input type="password" name="pass">
         <input type="Submit" name="sbbtn">
     </form>
-    <?php
+    <?php 
+    session_start();
      $con=mysqli_connect('localhost','root','','users');
      if(isset($_POST['sbbtn'])){
         $mail=$_POST['mail'];
@@ -22,8 +26,11 @@
         if(mysqli_num_rows($result)==1){
             $row = mysqli_fetch_assoc($result);
             if(Password_verify($input_pass,$row['password'])){
-                echo "Login Successful";
-                echo "<script>window.location='dashboard.php'</script>";
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['user_name'] = $row['Name'];
+                // echo "<script>window.location='dashboard.php'</script>";
+                header("Location: dashboard.php");
+                exit();
             }else{
                 echo "Wrong Password";
             }
