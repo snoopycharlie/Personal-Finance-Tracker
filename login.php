@@ -16,7 +16,7 @@
         <input type="Submit" name="sbbtn">
     </form>
     <?php 
-    session_start();
+    // session_start();
      $con=mysqli_connect('localhost','root','','users');
      if(isset($_POST['sbbtn'])){
         $mail=$_POST['mail'];
