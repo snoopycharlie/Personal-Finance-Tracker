@@ -25,11 +25,11 @@
         $result=mysqli_query($con,$query);
         if(mysqli_num_rows($result)==1){
             $row = mysqli_fetch_assoc($result);
-            if(Password_verify($input_pass,$row['password'])){
-                $_SESSION['user_id'] = $row['id'];
-                $_SESSION['user_name'] = $row['Name'];
+            if(password_verify($input_pass, $row['password'])){
                 // echo "<script>window.location='dashboard.php'</script>";
-                header("Location: dashboard.php");
+                $_SESSION['user_id'] = $row['ID'];
+                $_SESSION['Name'] = $row['Name'];
+                 header("Location: dashboard.php");
                 exit();
             }else{
                 echo "Wrong Password";
