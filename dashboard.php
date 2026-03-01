@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['ID'])){
+if(!isset($_SESSION['user_id'])){
     header("Location:login.php");
     exit();
 
@@ -42,7 +42,7 @@ $recent_result=mysqli_query($conn, $recent_query);
     
 <nav class="navbar navbar-light bg-white shadow-sm px-4">
     <span class="navbar-brand">Finance Tracker</span>
-    <div> Welcome, <?php echo $_SESSION['Name']; ?>
+    <div> Welcome, <?php echo $_SESSION['user_name']; ?>
         <a href="logout.php" class="btn btn-outline-danger btn-sm ms-3">Logout</a>
     </div>
 </nav>
