@@ -7,7 +7,7 @@
 </head>
 <body>
       <button onclick="window.location.href='login.php'">Login</button> 
-    <h1>WELCOME TO TRACK YOUR MOENY 💸</h1>
+    <h1>WELCOME TO TRACK YOUR MONEY 💸</h1>
     <form method="POST"> 
         Name: <input type="text" name="name" required>
         Email: <input type="text" name="mail" required>

@@ -48,7 +48,7 @@ $recent_result=mysqli_query($conn, $recent_query);
             <li>Add Expense</li>
             <li>Reports</li>
             <li>Savings</li>
-            <li>Logout</li>
+            <li><a href="logout.php">Logout</a></li>
         </ul>  
     </div> 
   <div class="main">
