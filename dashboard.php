@@ -28,6 +28,10 @@ ORDER BY date DESC
 LIMIT 5
 ";
 $recent_result=mysqli_query($conn, $recent_query);
+$total_expense_query="SELECT SUM(amount) AS total_expense FROM expenses WHERE user_id='$user_id'";
+$total_expense_result = mysqli_query($conn, $total_expense_query);
+$total_expense=mysqli_fetch_assoc($total_expense_result)['total_expense']?? 0;
+$saving=$total_income - $total_expense;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +49,7 @@ $recent_result=mysqli_query($conn, $recent_query);
         <ul>
             <li>Dashboard</li>
             <li>Add Income</li>
-            <li>Add Expense</li>
+            <li><a href="add_expense.php">Add Expense</a></li>
             <li>Reports</li>
             <li>Savings</li>
             <li><a href="logout.php">Logout</a></li>
@@ -73,11 +77,11 @@ $recent_result=mysqli_query($conn, $recent_query);
         </div>
         <div class="card-box">
             <h5>Total Expense</h5>
-            <h3>₹0</h3>
+            <h3>₹<?php echo $total_expense; ?></h3>
         </div>
         <div class="card-box">
             <h5>Savings</h5>
-            <h3>₹<?php echo $total_income-0; ?></h3>
+            <h3>₹<?php echo $saving ; ?></h3>
         </div>
     </div>
 </div>
