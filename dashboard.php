@@ -1,11 +1,13 @@
 <?php
 session_start();
+$user_id = $_SESSION['user_id'];
 if(!isset($_SESSION['user_id'])){
     header("Location:login.php");
 exit();       
 }
 include "db.php";
 $user_id=$_SESSION['user_id'];
+
 /*--------total Income-----------------*/
 $total_query="SELECT SUM(amount) AS total FROM income WHERE user_id ='$user_id'";
 $total_result=mysqli_query($conn,$total_query);
@@ -48,9 +50,9 @@ $saving=$total_income - $total_expense;
         <h2>Finance</h2>
         <ul>
             <li>Dashboard</li>
-            <li>Add Income</li>
+            <li><a href="income.php">Add Income</a></li>
             <li><a href="add_expense.php">Add Expense</a></li>
-            <li>Reports</li>
+            <li><a href="reports.php">Reports</a></li>
             <li>Savings</li>
             <li><a href="logout.php">Logout</a></li>
         </ul>  
