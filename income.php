@@ -15,7 +15,7 @@ if(isset($_POST['sbtn'])){
 
     if($amount >0 && !empty($date)){
         $insert_query = "INSERT INTO income (user_id,amount,date, note)
-        VALUES ('$user_id','$amount','$date')";
+        VALUES ('$user_id','$amount','$date','$note')";
 
         mysqli_query($conn, $insert_query);
         header("Location:dashboard.php");
