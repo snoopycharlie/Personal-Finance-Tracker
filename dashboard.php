@@ -106,7 +106,7 @@ while($row = mysqli_fetch_assoc($pie_result)){
             <li><a href="income.php">Add Income</a></li>
             <li><a href="add_expense.php">Add Expense</a></li>
             <li><a href="reports.php">Reports</a></li>
-            <li>Savings</li>
+            <li><a href="sa.php">Savings</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>  
     </div> 
