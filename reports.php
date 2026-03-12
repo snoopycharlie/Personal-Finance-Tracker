@@ -59,7 +59,7 @@ $expense_result=mysqli_query($conn,$expense_query);
             <li><a href="add_income.php">Add Income</a></li>
             <li><a href="add_expense.php">Add Expense</a></li>
             <li><a href="reports.php">Reports</a></li>
-            <li>Savings</li>
+            <li><a href="sa.php">Savings</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
@@ -82,7 +82,7 @@ $expense_result=mysqli_query($conn,$expense_query);
                     if($month_year != $current_month){
                         $current_month = $month_year;
                         echo "<tr class='month-header'>
-                                <th colspan='4'>$current_month</th>
+                                <th colspan='5'>$current_month</th>
                               </tr>";
                         echo "<tr class='col-header'>
                                 <th>Date</th>
@@ -96,6 +96,8 @@ $expense_result=mysqli_query($conn,$expense_query);
                             <td>" . $row['category'] . "</td>
                             <td>₹" . $row['amount'] . "</td>
                             <td>" . ($row['note'] ?? '-') . "</td>
+                            <td><a href='delete_expense.php?id=" . $row['id']."'
+                            onclick='return confirm (\"Are you sure?\")'>Delete</a></td>
                           </tr>";
                 }
                 ?>
@@ -106,6 +108,7 @@ $expense_result=mysqli_query($conn,$expense_query);
         </div>
     </div>
 </div>
+
 </body>
 </html>
 

@@ -32,7 +32,10 @@ $recent_result = mysqli_query($conn, $recent_query);
 $total_expense_query = "SELECT SUM(amount) AS total_expense FROM expenses WHERE user_id='$user_id'";
 $total_expense_result = mysqli_query($conn, $total_expense_query);
 $total_expense = mysqli_fetch_assoc($total_expense_result)['total_expense'] ?? 0;
-$saving = $total_income - $total_expense;
+$savings_query = "SELECT SUM(saved_amount) AS total_saved FROM savings WHERE user_id='$user_id'";
+$savings_result=mysqli_query($conn,$savings_query);
+$total_saved=mysqli_fetch_assoc($savings_result)['total_saved']??0;
+// $balance=$this_month-$this_month_expense-$total_saved;
 
 /*-------- Line Chart Data --------*/
 $query = "SELECT MONTH(date) as month, SUM(amount) as total
@@ -43,9 +46,31 @@ $result = mysqli_query($conn, $query);
 $months = [];
 $amounts = [];
 while($row = mysqli_fetch_assoc($result)){
-    $months[] = $row['month'];
+    $months[] = date("M", mktime(0, 0, 0, $row['month'], 1));  
     $amounts[] = $row['total'];
 }
+/*-------- This Month Income --------*/
+$month_query = "
+    SELECT SUM(amount) AS month_total
+    FROM income
+    WHERE user_id ='$user_id'
+    AND MONTH(date) = MONTH(CURRENT_DATE())
+    AND YEAR(date) = YEAR(CURRENT_DATE())
+";
+$month_result = mysqli_query($conn, $month_query);
+$this_month = mysqli_fetch_assoc($month_result)['month_total'] ?? 0;
+
+/*-------- This Month Expense --------*/
+$month_expense_query = "
+    SELECT SUM(amount) AS month_expense
+    FROM expenses
+    WHERE user_id='$user_id'
+    AND MONTH(date) = MONTH(CURRENT_DATE())
+    AND YEAR(date) = YEAR(CURRENT_DATE())
+";
+$month_expense_result = mysqli_query($conn, $month_expense_query);
+$this_month_expense = mysqli_fetch_assoc($month_expense_result)['month_expense'] ?? 0;
+$balance=$this_month-$this_month_expense;
 
 /*-------- Pie Chart Data --------*/
 $pie_query = "SELECT category, SUM(amount) as total
@@ -126,8 +151,12 @@ while($row = mysqli_fetch_assoc($pie_result)){
                     <h3>₹<?php echo $total_income; ?></h3>
                 </div>
                 <div class="card-box">
-                    <h5>This Month</h5>
+                    <h5>This Month Income</h5>
                     <h3>₹<?php echo $this_month; ?></h3>
+                </div>
+                <div class="card-box">
+                    <h5>This Month Expense</h5>
+                    <h3>₹<?php echo $this_month_expense; ?></h3>
                 </div>
                 <div class="card-box">
                     <h5>Total Expense</h5>
@@ -135,8 +164,12 @@ while($row = mysqli_fetch_assoc($pie_result)){
                 </div>
                 <div class="card-box">
                     <h5>Savings</h5>
-                    <h3>₹<?php echo $saving; ?></h3>
+                    <h3>₹<?php echo $total_saved; ?></h3>
                 </div>
+                <div class="card-box">
+                 <h5>Balance</h5>
+                <h3>₹<?php echo $balance; ?></h3>
+</div>
             </div>
         </div>
 
@@ -204,7 +237,7 @@ new Chart(document.getElementById('gaugeChart'), {
     data: {
         labels: ['Saved', 'Yet to Save'],
         datasets: [{
-            data: [<?php echo $saving; ?>, <?php echo $total_income - $saving; ?>],
+            data: [<?php echo $total_saved; ?>, <?php echo $total_income - $total_saved; ?>],
             backgroundColor: ['#fffd7d', '#ef4488'],
             borderWidth: 0
         }]
